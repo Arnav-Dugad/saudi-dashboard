@@ -79,14 +79,6 @@
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
 
-        @keyframes radar-spin {
-            100% { transform: rotate(360deg); }
-        }
-        .radar-sweep {
-            background: conic-gradient(from 0deg, transparent 70%, rgba(0, 108, 53, 0.4) 100%);
-            animation: radar-spin 4s linear infinite;
-        }
-
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #020d05; }
@@ -105,17 +97,6 @@
             opacity: 0;
             margin-top: 0;
             margin-bottom: 0;
-        }
-
-        /* Waypoint Dots */
-        .waypoint-dot {
-            transition: all 0.3s ease;
-        }
-        .waypoint-dot.active {
-            box-shadow: 0 0 20px 8px rgba(212, 175, 55, 0.8);
-            background-color: #D4AF37;
-            transform: scale(1.5);
-            z-index: 20;
         }
 
         /* Ticker Animation */
@@ -159,35 +140,6 @@
             transform: translateX(-8px);
         }
 
-        /* Animated Connectivity Lines */
-        .connectivity-map {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            background: radial-gradient(ellipse at center, rgba(0, 108, 53, 0.1) 0%, transparent 70%);
-            overflow: hidden;
-            border-radius: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .signal-line {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 50%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent);
-            transform-origin: left center;
-            opacity: 0;
-            animation: shoot-signal 3s infinite ease-out;
-        }
-
-        @keyframes shoot-signal {
-            0% { transform: rotate(var(--angle)) scaleX(0); opacity: 1; }
-            50% { opacity: 1; }
-            100% { transform: rotate(var(--angle)) scaleX(1); opacity: 0; }
-        }
-
         /* Count Up Animation Class */
         .count-up-element {
             opacity: 0;
@@ -197,6 +149,11 @@
         .count-up-element.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Progress Bar Grow Animation */
+        .progress-fill {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
@@ -216,10 +173,6 @@
 
     <!-- Floating Quick Navigation -->
     <nav class="hidden xl:flex fixed right-6 top-1/2 transform -translate-y-1/2 flex-col gap-4 z-50 glass-card p-3 rounded-full border-saudi-gold/20">
-        <a href="#nav-map" class="nav-item relative p-2 rounded-full text-gray-400 hover:text-saudi-gold hover:bg-white/5 transition-all">
-            <i data-lucide="map" class="w-5 h-5"></i>
-            <span class="nav-tooltip absolute right-full top-1/2 -translate-y-1/2 mr-2 px-2 py-1 bg-black/90 text-saudi-gold text-[10px] uppercase font-bold tracking-widest rounded whitespace-nowrap border border-saudi-gold/20">Map</span>
-        </a>
         <a href="#nav-wealth" class="nav-item relative p-2 rounded-full text-gray-400 hover:text-saudi-green hover:bg-white/5 transition-all">
             <i data-lucide="wallet" class="w-5 h-5"></i>
             <span class="nav-tooltip absolute right-full top-1/2 -translate-y-1/2 mr-2 px-2 py-1 bg-black/90 text-saudi-green text-[10px] uppercase font-bold tracking-widest rounded whitespace-nowrap border border-saudi-green/20">Wealth</span>
@@ -247,6 +200,10 @@
         <a href="#nav-enviro" class="nav-item relative p-2 rounded-full text-gray-400 hover:text-emerald-500 hover:bg-white/5 transition-all">
             <i data-lucide="leaf" class="w-5 h-5"></i>
             <span class="nav-tooltip absolute right-full top-1/2 -translate-y-1/2 mr-2 px-2 py-1 bg-black/90 text-emerald-500 text-[10px] uppercase font-bold tracking-widest rounded whitespace-nowrap border border-emerald-500/20">Enviro</span>
+        </a>
+        <a href="#nav-tourism" class="nav-item relative p-2 rounded-full text-gray-400 hover:text-yellow-400 hover:bg-white/5 transition-all">
+            <i data-lucide="plane" class="w-5 h-5"></i>
+            <span class="nav-tooltip absolute right-full top-1/2 -translate-y-1/2 mr-2 px-2 py-1 bg-black/90 text-yellow-400 text-[10px] uppercase font-bold tracking-widest rounded whitespace-nowrap border border-yellow-400/20">Tourism</span>
         </a>
     </nav>
 
@@ -278,161 +235,8 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-8 pt-0">
 
-        <!-- ================= SECTION: INTERACTIVE MAP ================= -->
-        <div id="nav-map" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-2 mb-8 cursor-pointer group" onclick="toggleSection('sec-map')">
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
-            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Geospatial Intelligence Map
-                <i data-lucide="chevron-up" id="icon-sec-map" class="w-5 h-5 transition-transform duration-300"></i>
-            </span>
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
-        </div>
-        
-        <div id="sec-map" class="section-content pb-4">
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                
-                <!-- Map Container -->
-                <div class="lg:col-span-3 glass-card rounded-3xl p-4 relative overflow-hidden min-h-[400px] md:min-h-[500px] flex items-center justify-center bg-black/50">
-                    <!-- Radar effect -->
-                    <div class="absolute inset-0 radar-sweep opacity-30 rounded-3xl pointer-events-none"></div>
-                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] pointer-events-none opacity-50"></div>
-                    
-                    <!-- Stylized Map from Internet -->
-                    <div class="relative w-full max-w-lg drop-shadow-2xl" style="aspect-ratio: 1181/1045;">
-                        
-                        <!-- High Fidelity Map Image from Wikimedia Commons -->
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Saudi_Arabia_location_map.svg/1024px-Saudi_Arabia_location_map.svg.png" 
-                             onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/4/4b/Saudi_Arabia_location_map.svg';"
-                             style="filter: invert(1) grayscale(1) sepia(1) hue-rotate(80deg) brightness(1.2) contrast(1.5);" 
-                             class="w-full h-full object-contain pointer-events-none drop-shadow-[0_0_15px_rgba(0,108,53,0.5)]" 
-                             alt="Accurate Map of Saudi Arabia" />
-
-                        <!-- Primary Hubs -->
-                        <button class="waypoint-dot absolute top-[25.2%] left-[5.6%] -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full flex items-center justify-center group z-10" onclick="updateMap('neom', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-cyan-500/30">NEOM</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[46.4%] left-[57.3%] -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full flex items-center justify-center group z-10 active" onclick="updateMap('riyadh', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-saudi-gold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-saudi-gold/30">Riyadh</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[64.7%] left-[24.3%] -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full flex items-center justify-center group z-10" onclick="updateMap('jeddah', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-emerald-500/30">Jeddah</span>
-                        </button>
-
-                        <!-- Secondary & Holy Cities -->
-                        <button class="waypoint-dot absolute top-[65.2%] left-[27.3%] -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full flex items-center justify-center group z-10" onclick="updateMap('mecca', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-yellow-500/30">Mecca</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[47.0%] left-[26.5%] -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full flex items-center justify-center group z-10" onclick="updateMap('medina', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-emerald-200 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-emerald-300/30">Medina</span>
-                        </button>
-                        
-                        <!-- Industrial & Coastal -->
-                        <button class="waypoint-dot absolute top-[35.8%] left-[72.1%] -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full flex items-center justify-center group z-10" onclick="updateMap('dammam', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-orange-500/30">Dammam</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[32.3%] left-[70.0%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('jubail', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-blue-500/30">Jubail</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[37.0%] left-[72.1%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('dhahran', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-orange-500/30">Dhahran</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[37.0%] left-[72.6%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('khobar', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-teal-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-teal-500/30">Khobar</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[50.0%] left-[19.5%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('yanbu', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-teal-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-teal-400/30">Yanbu</span>
-                        </button>
-
-                        <!-- Regional & Heritage Hubs -->
-                        <button class="waypoint-dot absolute top-[34.7%] left-[19.1%] -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full flex items-center justify-center group z-10" onclick="updateMap('alula', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-purple-500/30">AlUla</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[24.7%] left-[13.0%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('tabuk', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-blue-400/30">Tabuk</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[29.4%] left-[35.6%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('hail', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-amber-500/30">Hail</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[36.4%] left-[45.2%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('buraidah', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-lime-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-lime-500/30">Buraidah</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[42.3%] left-[69.5%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('al_ahsa', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-green-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-green-500/30">Al Ahsa</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[66.4%] left-[30.0%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('taif', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-pink-500/30">Taif</span>
-                        </button>
-
-                        <!-- Southern Hubs -->
-                        <button class="waypoint-dot absolute top-[84.1%] left-[39.1%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('abha', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-indigo-500/30">Abha</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[92.3%] left-[39.1%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('jizan', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-cyan-500/30">Jizan</span>
-                        </button>
-                        <button class="waypoint-dot absolute top-[88.8%] left-[46.0%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full flex items-center justify-center group z-10" onclick="updateMap('najran', this)">
-                            <span class="absolute -top-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded text-[10px] uppercase font-bold text-orange-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-orange-400/30">Najran</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Info Panel -->
-                <div class="lg:col-span-2 flex flex-col gap-6">
-                    <div class="glass-card rounded-3xl p-6 flex flex-col justify-between flex-grow" id="map-info-panel">
-                        <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="text-[10px] bg-saudi-gold/20 text-saudi-gold px-2 py-1 rounded font-bold uppercase tracking-wider border border-saudi-gold/30" id="map-tag">Capital City</span>
-                                <i data-lucide="map-pin" class="text-gray-400 w-5 h-5"></i>
-                            </div>
-                            <h3 class="text-3xl font-black text-white tracking-widest uppercase mb-2" id="map-title">Riyadh</h3>
-                            <p class="text-xs text-gray-400 mb-6 leading-relaxed" id="map-desc">The political and financial capital of the Kingdom. Experiencing massive infrastructure expansion aiming to become one of the top 10 largest city economies globally by 2030.</p>
-                            
-                            <div class="space-y-4" id="map-stats">
-                                <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex justify-between items-center">
-                                    <span class="text-xs text-gray-300 uppercase tracking-wider">Population</span>
-                                    <span class="font-bold font-numbers text-white">~7.6 Million</span>
-                                </div>
-                                <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex justify-between items-center">
-                                    <span class="text-xs text-gray-300 uppercase tracking-wider">Major Project</span>
-                                    <span class="font-bold text-saudi-gold text-sm">King Salman Park</span>
-                                </div>
-                                <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex justify-between items-center">
-                                    <span class="text-xs text-gray-300 uppercase tracking-wider">GDP Contribution</span>
-                                    <span class="font-bold text-white font-numbers text-sm">~47% (Non-Oil)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-white/10 text-[10px] text-gray-500 text-center tracking-widest uppercase">
-                            Select a glowing node to view regional intelligence
-                        </div>
-                    </div>
-                    
-                    <!-- Animated Connectivity Visual -->
-                    <div class="glass-card rounded-3xl p-4 flex items-center justify-center relative overflow-hidden h-32">
-                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.1)_0%,transparent_70%)]"></div>
-                        <div class="text-center relative z-10">
-                            <i data-lucide="globe-2" class="w-6 h-6 text-saudi-gold mx-auto mb-2 animate-pulse"></i>
-                            <h4 class="text-[10px] uppercase font-bold tracking-widest text-gray-300">Global Connectivity Hub</h4>
-                            <p class="text-[8px] text-gray-500 mt-1">Simulating trade & data flow</p>
-                        </div>
-                        <!-- Animated Lines -->
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div class="signal-line" style="--angle: 0deg; animation-delay: 0s;"></div>
-                            <div class="signal-line" style="--angle: 45deg; animation-delay: 0.5s;"></div>
-                            <div class="signal-line" style="--angle: 90deg; animation-delay: 1s;"></div>
-                            <div class="signal-line" style="--angle: 135deg; animation-delay: 1.5s;"></div>
-                            <div class="signal-line" style="--angle: 180deg; animation-delay: 2s;"></div>
-                            <div class="signal-line" style="--angle: 225deg; animation-delay: 2.5s;"></div>
-                            <div class="signal-line" style="--angle: 270deg; animation-delay: 0.2s;"></div>
-                            <div class="signal-line" style="--angle: 315deg; animation-delay: 0.8s;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- ================= SECTION: WEALTH & ECONOMY ================= -->
-        <div id="nav-wealth" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-wealth')">
+        <div id="nav-wealth" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-2 mb-8 cursor-pointer group" onclick="toggleSection('sec-wealth')">
             <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
             <span class="flex items-center gap-2 group-hover:text-white transition-colors">
                 Sovereign Wealth & Macroeconomy
@@ -672,7 +476,7 @@
         <div id="nav-energy" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-energy')">
             <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
             <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Energy & Resources
+                Energy, Minerals & Resources
                 <i data-lucide="chevron-up" id="icon-sec-energy" class="w-5 h-5 transition-transform duration-300"></i>
             </span>
             <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
@@ -692,15 +496,22 @@
                     <i data-lucide="pickaxe" class="absolute -right-8 -bottom-8 w-40 h-40 text-saudi-gold/10 transition-all"></i>
                     <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-4 flex items-center gap-2"><i data-lucide="gem" class="text-saudi-gold w-4 h-4"></i> Est. Mineral Wealth</h4>
                     <div class="text-4xl font-black font-numbers text-saudi-gold relative z-10 money-stat" data-usd="1300000000000" id="mineral-val">$1.3T</div>
-                    <div class="mt-4 flex justify-between items-center border-t border-white/10 pt-4"><span class="text-xs text-gray-300">Active Licenses</span><span class="text-sm font-bold text-white font-numbers">2,300+</span></div>
+                    <div class="mt-4 flex justify-between items-center border-t border-white/10 pt-4"><span class="text-xs text-gray-300">Active Licenses</span><span class="text-sm font-bold text-white font-numbers count-up-element" data-raw="2300">2,300+</span></div>
+                </div>
+                <!-- Mineral Mix Chart -->
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2"><i data-lucide="diamond" class="text-indigo-400 w-4 h-4"></i> Mineral Wealth Breakdown</h4>
+                    </div>
+                    <div class="h-32 w-full relative flex justify-center"><canvas id="mineralBreakdownChart"></canvas></div>
                 </div>
                 <!-- Renewable Chart -->
-                <div class="glass-card rounded-2xl p-6 lg:col-span-2 relative overflow-hidden">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2"><i data-lucide="sun" class="text-yellow-400 w-4 h-4"></i> 2030 Renewable Energy Mix</h4>
-                        <span class="text-[10px] text-gray-400 bg-white/10 px-2 py-1 rounded uppercase tracking-widest">130 GW Target</span>
+                        <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2"><i data-lucide="sun" class="text-yellow-400 w-4 h-4"></i> 2030 Renewables</h4>
+                        <span class="text-[10px] text-gray-400 bg-white/10 px-2 py-1 rounded uppercase tracking-widest">130 GW</span>
                     </div>
-                    <div class="h-40 w-full relative flex justify-center"><canvas id="renewablesMixChart"></canvas></div>
+                    <div class="h-32 w-full relative flex justify-center"><canvas id="renewablesMixChart"></canvas></div>
                 </div>
             </div>
         </div>
@@ -723,7 +534,7 @@
                     <h4 class="text-white uppercase tracking-widest text-sm font-bold flex items-center gap-2 mb-6 relative z-10"><i data-lucide="tree-pine" class="text-emerald-500 w-5 h-5"></i> Saudi Green Initiative</h4>
                     <div class="mb-6 relative z-10">
                         <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Trees Planted (Live Est.)</p>
-                        <div class="text-4xl font-black font-numbers text-emerald-400 tracking-tight" id="trees-val">45,000,000</div>
+                        <div class="text-4xl font-black font-numbers text-emerald-400 tracking-tight count-up-element" data-raw="45000000" id="trees-val">45,000,000</div>
                         <p class="text-[10px] text-gray-500 mt-1">Target: 10 Billion Trees to combat desertification</p>
                     </div>
                 </div>
@@ -829,9 +640,7 @@
                 <div class="text-3xl font-black font-numbers text-white tracking-tight mb-2">Top 10</div>
                 <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-4">Global rank in US Patents granted</p>
                 <div class="w-full bg-white/10 rounded-full h-1.5 mt-2">
-                    <div class="bg-blue-400 h-1.5 rounded-full relative overflow-hidden" style="width: 85%">
-                        <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
-                    </div>
+                    <div class="bg-blue-400 h-1.5 rounded-full progress-fill" data-target="85%" style="width: 0%"></div>
                 </div>
                 <p class="text-[9px] text-gray-500 mt-2">Driven largely by Saudi Aramco and KFUPM research outputs.</p>
             </div>
@@ -841,11 +650,11 @@
                 <div class="space-y-4 mt-2">
                     <div>
                         <div class="flex justify-between text-sm mb-1"><span class="text-gray-300">Youth Literacy (15-24)</span><span class="text-white font-bold font-numbers count-up-element" data-raw="99.5">99.5%</span></div>
-                        <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-400 h-2 rounded-full" style="width: 99.5%"></div></div>
+                        <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-400 h-2 rounded-full progress-fill" data-target="99.5%" style="width: 0%"></div></div>
                     </div>
                     <div>
                         <div class="flex justify-between text-sm mb-1"><span class="text-gray-300">Internet Penetration</span><span class="text-white font-bold font-numbers count-up-element" data-raw="99.0">99.0%</span></div>
-                        <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-300 h-2 rounded-full" style="width: 99%"></div></div>
+                        <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-300 h-2 rounded-full progress-fill" data-target="99%" style="width: 0%"></div></div>
                     </div>
                 </div>
             </div>
@@ -869,17 +678,17 @@
                     <div class="space-y-5">
                         <div>
                             <div class="flex justify-between text-sm mb-1"><span class="text-gray-300">Home Ownership</span><span class="text-white font-bold font-numbers count-up-element" data-raw="63.7">63.7%</span></div>
-                            <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-pink-500 h-2 rounded-full" style="width: 63.7%"></div></div>
+                            <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-pink-500 h-2 rounded-full progress-fill" data-target="63.7%" style="width: 0%"></div></div>
                             <p class="text-[8px] text-gray-500 mt-1">Target: 70% by 2030</p>
                         </div>
                         <div>
                             <div class="flex justify-between text-sm mb-1"><span class="text-gray-300">Sports Participation</span><span class="text-white font-bold font-numbers count-up-element" data-raw="48.2">48.2%</span></div>
-                            <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-blue-400 h-2 rounded-full" style="width: 48.2%"></div></div>
+                            <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-blue-400 h-2 rounded-full progress-fill" data-target="48.2%" style="width: 0%"></div></div>
                             <p class="text-[8px] text-gray-500 mt-1">Target: 40% (Surpassed)</p>
                         </div>
                         <div class="pt-4 border-t border-white/10">
                             <div class="flex justify-between text-sm mb-1"><span class="text-gray-300">Registered Volunteers</span><span class="text-white font-bold font-numbers count-up-element" data-raw="650000">650k+</span></div>
-                            <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-400 h-2 rounded-full" style="width: 65%"></div></div>
+                            <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-400 h-2 rounded-full progress-fill" data-target="65%" style="width: 0%"></div></div>
                             <p class="text-[8px] text-gray-500 mt-1">Target: 1 Million by 2030</p>
                         </div>
                     </div>
@@ -947,7 +756,7 @@
                     </div>
                     <div class="w-full bg-white/10 rounded-full h-3 relative">
                         <div class="absolute w-1 h-4 bg-orange-400 top-[-2px] left-[30%] z-10" title="Target"></div>
-                        <div class="bg-saudi-green h-3 rounded-full relative overflow-hidden" style="width: 35.6%"></div>
+                        <div class="bg-saudi-green h-3 rounded-full relative overflow-hidden progress-fill" data-target="35.6%" style="width: 0%"></div>
                     </div>
                 </div>
                 <div>
@@ -955,7 +764,7 @@
                         <span class="text-sm text-gray-300">Overall Unemployment</span>
                         <span class="text-2xl font-bold text-white font-numbers">4.4%</span>
                     </div>
-                    <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-400 h-2 rounded-full" style="width: 4.4%"></div></div>
+                    <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-400 h-2 rounded-full progress-fill" data-target="4.4%" style="width: 0%"></div></div>
                 </div>
             </div>
         </div>
@@ -1024,7 +833,7 @@
                     <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="factory" class="text-zinc-400 w-4 h-4"></i> EV Manufacturing</h4>
                     <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="500000">500,000</div>
                     <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Vehicles/Year Target (2030)</p>
-                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-zinc-400 h-1.5 rounded-full" style="width: 25%"></div></div>
+                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-zinc-400 h-1.5 rounded-full progress-fill" data-target="25%" style="width: 0%"></div></div>
                     <p class="text-[8px] text-right text-zinc-400 mt-1">Lucid & Ceer Facilities Active</p>
                 </div>
                 <!-- Defense -->
@@ -1032,7 +841,7 @@
                     <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="shield" class="text-red-500 w-4 h-4"></i> Defense (SAMI)</h4>
                     <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="50">50%</div>
                     <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Localization Target by 2030</p>
-                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-red-500 h-1.5 rounded-full" style="width: 14%"></div></div>
+                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-red-500 h-1.5 rounded-full progress-fill" data-target="14%" style="width: 0%"></div></div>
                     <p class="text-[8px] text-right text-red-400 mt-1">Current: ~14%</p>
                 </div>
                 <!-- Tech / VC -->
@@ -1091,26 +900,91 @@
         </div>
 
         <div id="sec-projects" class="section-content">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div class="glass-card rounded-2xl p-4 border-l-4 border-l-cyan-400 relative overflow-hidden">
                     <div class="absolute -right-4 -bottom-4 opacity-10 text-cyan-400"><i data-lucide="building-2" class="w-20 h-20"></i></div>
                     <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">NEOM</h5><span class="text-[8px] bg-cyan-400/20 text-cyan-400 px-1 py-0.5 rounded">PHASE 1</span></div>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-cyan-400 h-1 rounded-full" style="width: 35%"></div></div>
+                    <p class="text-[9px] text-gray-400 mb-2">Cognitive City / The Line</p>
+                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-cyan-400 h-1 rounded-full progress-fill" data-target="35%" style="width: 0%"></div></div>
                 </div>
                 <div class="glass-card rounded-2xl p-4 border-l-4 border-l-purple-400 relative overflow-hidden">
                     <div class="absolute -right-4 -bottom-4 opacity-10 text-purple-400"><i data-lucide="ferris-wheel" class="w-20 h-20"></i></div>
                     <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">Qiddiya</h5><span class="text-[8px] bg-purple-400/20 text-purple-400 px-1 py-0.5 rounded">CONST.</span></div>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-purple-400 h-1 rounded-full" style="width: 45%"></div></div>
+                    <p class="text-[9px] text-gray-400 mb-2">Entertainment Capital</p>
+                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-purple-400 h-1 rounded-full progress-fill" data-target="45%" style="width: 0%"></div></div>
                 </div>
                 <div class="glass-card rounded-2xl p-4 border-l-4 border-l-emerald-400 relative overflow-hidden">
                     <div class="absolute -right-4 -bottom-4 opacity-10 text-emerald-400"><i data-lucide="palmtree" class="w-20 h-20"></i></div>
                     <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">Red Sea</h5><span class="text-[8px] bg-emerald-400/20 text-emerald-400 px-1 py-0.5 rounded">OPENING</span></div>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-emerald-400 h-1 rounded-full" style="width: 65%"></div></div>
+                    <p class="text-[9px] text-gray-400 mb-2">Regenerative Tourism</p>
+                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-emerald-400 h-1 rounded-full progress-fill" data-target="65%" style="width: 0%"></div></div>
                 </div>
                 <div class="glass-card rounded-2xl p-4 border-l-4 border-l-amber-400 relative overflow-hidden">
                     <div class="absolute -right-4 -bottom-4 opacity-10 text-amber-400"><i data-lucide="castle" class="w-20 h-20"></i></div>
                     <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">Diriyah</h5><span class="text-[8px] bg-amber-400/20 text-amber-400 px-1 py-0.5 rounded">OPENING</span></div>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-amber-400 h-1 rounded-full" style="width: 55%"></div></div>
+                    <p class="text-[9px] text-gray-400 mb-2">Cultural Heritage City</p>
+                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-amber-400 h-1 rounded-full progress-fill" data-target="55%" style="width: 0%"></div></div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 border-l-4 border-l-indigo-400 relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 text-indigo-400"><i data-lucide="box" class="w-20 h-20"></i></div>
+                    <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">The Mukaab</h5><span class="text-[8px] bg-indigo-400/20 text-indigo-400 px-1 py-0.5 rounded">EARLY</span></div>
+                    <p class="text-[9px] text-gray-400 mb-2">New Murabba Downtown</p>
+                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-indigo-400 h-1 rounded-full progress-fill" data-target="15%" style="width: 0%"></div></div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 border-l-4 border-l-blue-500 relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 text-blue-500"><i data-lucide="home" class="w-20 h-20"></i></div>
+                    <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">Roshn</h5><span class="text-[8px] bg-blue-500/20 text-blue-500 px-1 py-0.5 rounded">SCALING</span></div>
+                    <p class="text-[9px] text-gray-400 mb-2">National Housing Dev.</p>
+                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-blue-500 h-1 rounded-full progress-fill" data-target="40%" style="width: 0%"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= NEW SECTION: TOURISM & HOSPITALITY EXPANSION ================= -->
+        <div id="nav-tourism" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-tourism')">
+            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
+            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
+                Tourism & Hospitality Expansion
+                <i data-lucide="chevron-up" id="icon-sec-tourism" class="w-5 h-5 transition-transform duration-300"></i>
+            </span>
+            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
+        </div>
+
+        <div id="sec-tourism" class="section-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Tourism Stats Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="glass-card rounded-2xl p-5 border-t-2 border-t-yellow-400">
+                        <i data-lucide="passport" class="text-yellow-400 w-6 h-6 mb-2"></i>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">E-Visa Approvals</p>
+                        <div class="text-2xl font-bold font-numbers text-white count-up-element" data-raw="30000000">30M+</div>
+                        <p class="text-[9px] text-yellow-400 mt-2">Issued since program launch</p>
+                    </div>
+                    <div class="glass-card rounded-2xl p-5 border-t-2 border-t-blue-400">
+                        <i data-lucide="hotel" class="text-blue-400 w-6 h-6 mb-2"></i>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Hotel Keys Pipeline</p>
+                        <div class="text-2xl font-bold font-numbers text-white count-up-element" data-raw="315000">315,000+</div>
+                        <p class="text-[9px] text-blue-400 mt-2">New rooms planned by 2030</p>
+                    </div>
+                    <div class="glass-card rounded-2xl p-5 border-t-2 border-t-emerald-400">
+                        <i data-lucide="map" class="text-emerald-400 w-6 h-6 mb-2"></i>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">UNESCO Heritage Sites</p>
+                        <div class="text-2xl font-bold font-numbers text-white count-up-element" data-raw="7">7</div>
+                        <p class="text-[9px] text-emerald-400 mt-2">Globally recognized locations</p>
+                    </div>
+                    <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-400">
+                        <i data-lucide="pie-chart" class="text-pink-400 w-6 h-6 mb-2"></i>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Target GDP Contribution</p>
+                        <div class="text-2xl font-bold font-numbers text-white count-up-element" data-raw="10">10%</div>
+                        <p class="text-[9px] text-pink-400 mt-2">Vision 2030 economic goal</p>
+                    </div>
+                </div>
+
+                <!-- Tourism Arrivals Chart -->
+                <div class="glass-card rounded-2xl p-6">
+                    <h4 class="text-white uppercase tracking-widest text-sm font-bold flex items-center gap-2 mb-4"><i data-lucide="plane-landing" class="text-yellow-400 w-5 h-5"></i> Tourism Arrivals Target (Millions)</h4>
+                    <div class="h-64 w-full"><canvas id="tourismArrivalsChart"></canvas></div>
                 </div>
             </div>
         </div>
@@ -1149,7 +1023,7 @@
                     <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="leaf" class="text-emerald-500 w-4 h-4"></i> Food Security Fund</h4>
                     <div class="text-3xl font-black font-numbers text-white money-stat count-up-element" data-usd="3200000000" data-raw="3.2">$3.2B</div>
                     <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">SALIC Strategic Investment</p>
-                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 85%"></div></div>
+                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-emerald-500 h-1.5 rounded-full progress-fill" data-target="85%" style="width: 0%"></div></div>
                     <p class="text-[8px] text-right text-emerald-400 mt-1">Global Supply Chain Acq.</p>
                 </div>
                 <div class="glass-card rounded-2xl p-6 border-t-2 border-t-cyan-300">
@@ -1248,13 +1122,13 @@
                         <span class="font-bold text-blue-500">6 Planned</span>
                     </div>
                 </div>
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-orange-400">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="ship" class="text-orange-400 w-4 h-4"></i> Landbridge Project</h4>
-                    <div class="text-3xl font-black font-numbers text-white"><span class="count-up-element" data-raw="1300">1,300</span> <span class="text-sm">km</span></div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Gulf to Red Sea Rail Link</p>
+                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-indigo-400">
+                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="plane-takeoff" class="text-indigo-400 w-4 h-4"></i> Riyadh Air</h4>
+                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="100">100+</div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Global Destinations by 2030</p>
                     <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Goal</span>
-                        <span class="font-bold text-orange-400">Global Logistics Hub</span>
+                        <span class="text-gray-300">Status</span>
+                        <span class="font-bold text-indigo-400">New National Carrier</span>
                     </div>
                 </div>
             </div>
@@ -1291,7 +1165,7 @@
                         <div class="text-3xl font-black font-numbers text-white tracking-tight mb-2"><span class="count-up-element" data-raw="80">80</span> Years</div>
                         <p class="text-xs text-gray-300 uppercase tracking-widest mb-1">Vision 2030 Goal</p>
                         <div class="w-full bg-white/10 rounded-full h-1.5 mt-3">
-                            <div class="bg-red-400 h-1.5 rounded-full" style="width: 88%"></div>
+                            <div class="bg-red-400 h-1.5 rounded-full progress-fill" data-target="88%" style="width: 0%"></div>
                         </div>
                         <p class="text-[10px] text-right text-gray-500 mt-1">Current: ~75.3 Yrs</p>
                     </div>
@@ -1331,200 +1205,6 @@
         let currentCurrency = 'USD';
         const SAR_RATE = 3.75; // 1 USD = 3.75 SAR
 
-        // Map Data Object
-        const mapData = {
-            riyadh: {
-                tag: 'Capital City', color: 'text-saudi-gold', bg: 'bg-saudi-gold/20', border: 'border-saudi-gold/30',
-                title: 'Riyadh',
-                desc: 'The political and financial capital of the Kingdom. Experiencing massive infrastructure expansion aiming to become one of the top 10 largest city economies globally by 2030.',
-                stats: [
-                    { label: 'Population', value: '~7.6 Million', color: 'text-white' },
-                    { label: 'Major Project', value: 'King Salman Park', color: 'text-saudi-gold' },
-                    { label: 'GDP Contribution', value: '~47% (Non-Oil)', color: 'text-white' }
-                ]
-            },
-            neom: {
-                tag: 'Giga-Project', color: 'text-cyan-400', bg: 'bg-cyan-400/20', border: 'border-cyan-400/30',
-                title: 'NEOM',
-                desc: 'A $500B+ cognitive city project in the northwest. Entirely powered by renewable energy, featuring the groundbreaking linear city, THE LINE, and winter sports resort Trojena.',
-                stats: [
-                    { label: 'Area', value: '26,500 km²', color: 'text-white' },
-                    { label: 'Est. Investment', value: '$500 Billion+', color: 'text-cyan-400 money-stat', usd: 500000000000 },
-                    { label: 'Energy Source', value: '100% Renewable', color: 'text-white' }
-                ]
-            },
-            jeddah: {
-                tag: 'Commercial Hub', color: 'text-emerald-400', bg: 'bg-emerald-400/20', border: 'border-emerald-400/30',
-                title: 'Jeddah',
-                desc: 'The principal gateway to Mecca and the largest seaport on the Red Sea. Known as the commercial capital and a major center for arts, culture, and tourism.',
-                stats: [
-                    { label: 'Population', value: '~4.8 Million', color: 'text-white' },
-                    { label: 'Major Project', value: 'Jeddah Central', color: 'text-emerald-400' },
-                    { label: 'Port Rank', value: '#1 in Red Sea', color: 'text-white' }
-                ]
-            },
-            dammam: {
-                tag: 'Energy Capital', color: 'text-orange-400', bg: 'bg-orange-400/20', border: 'border-orange-400/30',
-                title: 'Dammam',
-                desc: 'The capital of the Eastern Province. The epicenter of the Saudi oil industry and home to Saudi Aramco headquarters, driving the nation\'s industrial sector.',
-                stats: [
-                    { label: 'Region Pop.', value: '~5.1 Million', color: 'text-white' },
-                    { label: 'Key Industry', value: 'Oil & Gas', color: 'text-orange-400' },
-                    { label: 'Major Port', value: 'King Abdulaziz Port', color: 'text-white' }
-                ]
-            },
-            alula: {
-                tag: 'Heritage Site', color: 'text-purple-400', bg: 'bg-purple-400/20', border: 'border-purple-400/30',
-                title: 'AlUla',
-                desc: 'A living museum holding 200,000 years of largely unexplored human history. Home to Hegra, Saudi Arabia\'s first UNESCO World Heritage Site.',
-                stats: [
-                    { label: 'Target Tourists', value: '2M by 2035', color: 'text-white' },
-                    { label: 'Key Site', value: 'Hegra (Nabataean)', color: 'text-purple-400' },
-                    { label: 'V2030 Status', value: 'Boutique Tourism', color: 'text-white' }
-                ]
-            },
-            jubail: {
-                tag: 'Industrial Hub', color: 'text-blue-400', bg: 'bg-blue-400/20', border: 'border-blue-400/30',
-                title: 'Jubail',
-                desc: 'The largest industrial city in the world. A global hub for petrochemicals, fertilizers, and steel production, managed by the Royal Commission.',
-                stats: [
-                    { label: 'Key Industry', value: 'Petrochemicals', color: 'text-blue-400' },
-                    { label: 'Major Player', value: 'SABIC', color: 'text-white' },
-                    { label: 'GDP Contrib.', value: '~7%', color: 'text-white' }
-                ]
-            },
-            dhahran: {
-                tag: 'Energy HQ', color: 'text-orange-400', bg: 'bg-orange-400/20', border: 'border-orange-400/30',
-                title: 'Dhahran',
-                desc: 'A major administrative center for the Saudi oil industry. Home to the headquarters of Saudi Aramco and the King Fahd University of Petroleum and Minerals.',
-                stats: [
-                    { label: 'Key Entity', value: 'Saudi Aramco', color: 'text-orange-400' },
-                    { label: 'Innovation', value: 'KFUPM University', color: 'text-white' },
-                    { label: 'Culture', value: 'Ithra Center', color: 'text-white' }
-                ]
-            },
-            khobar: {
-                tag: 'Commercial Coastal', color: 'text-teal-400', bg: 'bg-teal-400/20', border: 'border-teal-400/30',
-                title: 'Al Khobar',
-                desc: 'A bustling coastal city on the Arabian Gulf known for its commercial centers, scenic corniche, and direct causeway connection to Bahrain.',
-                stats: [
-                    { label: 'Key Feature', value: 'King Fahd Causeway', color: 'text-teal-400' },
-                    { label: 'Economy', value: 'Retail & Tourism', color: 'text-white' },
-                    { label: 'Status', value: 'Expats Hub', color: 'text-white' }
-                ]
-            },
-            mecca: {
-                tag: 'Holy City', color: 'text-yellow-400', bg: 'bg-yellow-400/20', border: 'border-yellow-400/30',
-                title: 'Mecca (Makkah)',
-                desc: 'The holiest city in Islam. A focal point for millions of Muslims globally undertaking the Hajj and Umrah pilgrimages every year.',
-                stats: [
-                    { label: 'Umrah Target', value: '30M by 2030', color: 'text-yellow-400' },
-                    { label: 'Key Site', value: 'Masjid al-Haram', color: 'text-white' },
-                    { label: 'Infrastructure', value: 'Haramain Rail', color: 'text-white' }
-                ]
-            },
-            medina: {
-                tag: 'Holy City', color: 'text-emerald-200', bg: 'bg-emerald-200/20', border: 'border-emerald-300/30',
-                title: 'Medina (Al Madinah)',
-                desc: 'The second holiest city in Islam, home to the Prophet\'s Mosque. Key focus area for religious tourism expansion under Vision 2030.',
-                stats: [
-                    { label: 'Key Site', value: 'Prophet\'s Mosque', color: 'text-emerald-200' },
-                    { label: 'Economy', value: 'Religious Tourism', color: 'text-white' },
-                    { label: 'Development', value: 'Rua Al Madinah', color: 'text-white' }
-                ]
-            },
-            abha: {
-                tag: 'Mountain Resort', color: 'text-indigo-400', bg: 'bg-indigo-400/20', border: 'border-indigo-400/30',
-                title: 'Abha',
-                desc: 'Capital of the Aseer region, situated at 2,270 meters above sea level. Famous for its mild climate, stunning mountains, and cultural heritage.',
-                stats: [
-                    { label: 'Climate', value: 'Cool & Mountainous', color: 'text-indigo-400' },
-                    { label: 'Tourism Strategy', value: 'Aseer Masterplan', color: 'text-white' },
-                    { label: 'Investment', value: '$13B by 2030', color: 'text-white money-stat', usd: 13000000000 }
-                ]
-            },
-            tabuk: {
-                tag: 'Northern Gateway', color: 'text-blue-300', bg: 'bg-blue-300/20', border: 'border-blue-400/30',
-                title: 'Tabuk',
-                desc: 'The capital city of the Tabuk Region in northwestern Saudi Arabia. A critical agricultural zone and the operational gateway to the NEOM giga-project.',
-                stats: [
-                    { label: 'Economy', value: 'Agriculture & Logistics', color: 'text-white' },
-                    { label: 'Strategic Role', value: 'NEOM Supply Hub', color: 'text-blue-300' },
-                    { label: 'Heritage', value: 'Tabuk Castle', color: 'text-white' }
-                ]
-            },
-            hail: {
-                tag: 'Historical Hub', color: 'text-amber-500', bg: 'bg-amber-500/20', border: 'border-amber-500/30',
-                title: 'Hail',
-                desc: 'A historic oasis city in north-central Saudi Arabia, famous for its agricultural output and international sporting events like the Hail Rally.',
-                stats: [
-                    { label: 'Key Event', value: 'Dakar Rally Route', color: 'text-amber-500' },
-                    { label: 'Agriculture', value: 'Wheat & Dates', color: 'text-white' },
-                    { label: 'Heritage Sites', value: 'Jubbah Rock Art', color: 'text-white' }
-                ]
-            },
-            buraidah: {
-                tag: 'Agri-Capital', color: 'text-lime-400', bg: 'bg-lime-400/20', border: 'border-lime-500/30',
-                title: 'Buraidah',
-                desc: 'The capital of Al-Qassim Region, situated in the heart of the Arabian Peninsula. Globally recognized for hosting the largest date festival in the world.',
-                stats: [
-                    { label: 'Key Export', value: 'Dates (Global Largest)', color: 'text-lime-400' },
-                    { label: 'Region Pop.', value: '~1.5 Million', color: 'text-white' },
-                    { label: 'Geography', value: 'Central Oasis', color: 'text-white' }
-                ]
-            },
-            al_ahsa: {
-                tag: 'UNESCO Oasis', color: 'text-green-400', bg: 'bg-green-400/20', border: 'border-green-500/30',
-                title: 'Al Ahsa (Hofuf)',
-                desc: 'The largest natural oasis in the world and a UNESCO World Heritage site, featuring millions of date palms and profound historical significance.',
-                stats: [
-                    { label: 'Palm Trees', value: '2.5 Million+', color: 'text-green-400' },
-                    { label: 'Status', value: 'UNESCO Heritage', color: 'text-white' },
-                    { label: 'Key Industry', value: 'Traditional Crafts', color: 'text-white' }
-                ]
-            },
-            taif: {
-                tag: 'Summer Resort', color: 'text-pink-400', bg: 'bg-pink-400/20', border: 'border-pink-500/30',
-                title: 'Taif',
-                desc: 'Known as the City of Roses and the unofficial summer capital of Saudi Arabia, perched at an elevation of nearly 1,900 meters.',
-                stats: [
-                    { label: 'Signature Export', value: 'Taif Roses & Perfume', color: 'text-pink-400' },
-                    { label: 'Tourism', value: 'Souq Okaz Festival', color: 'text-white' },
-                    { label: 'Climate', value: 'High-Altitude Moderate', color: 'text-white' }
-                ]
-            },
-            yanbu: {
-                tag: 'Industrial Coast', color: 'text-teal-300', bg: 'bg-teal-300/20', border: 'border-teal-400/30',
-                title: 'Yanbu',
-                desc: 'A major Red Sea port and industrial city managed by the Royal Commission. Crucial for petrochemical exports and growing as a diving tourism destination.',
-                stats: [
-                    { label: 'Key Function', value: 'Petchem Export Hub', color: 'text-teal-300' },
-                    { label: 'Infrastructure', value: 'Royal Commission', color: 'text-white' },
-                    { label: 'Tourism', value: 'Red Sea Diving', color: 'text-white' }
-                ]
-            },
-            jizan: {
-                tag: 'Southern Economy', color: 'text-cyan-500', bg: 'bg-cyan-500/20', border: 'border-cyan-500/30',
-                title: 'Jizan',
-                desc: 'A vital port city in the far southwest. Home to a rapidly developing economic city, lush agricultural terraces, and the prized Khawlani coffee beans.',
-                stats: [
-                    { label: 'Specialty Agri', value: 'Khawlani Coffee', color: 'text-cyan-500' },
-                    { label: 'Major Project', value: 'Jazan Economic City', color: 'text-white' },
-                    { label: 'Geography', value: 'Farasan Islands', color: 'text-white' }
-                ]
-            },
-            najran: {
-                tag: 'Heritage City', color: 'text-orange-300', bg: 'bg-orange-300/20', border: 'border-orange-400/30',
-                title: 'Najran',
-                desc: 'A deeply historical city near the Yemeni border, celebrated for its unique mud-brick architecture, ancient archaeology, and agricultural valleys.',
-                stats: [
-                    { label: 'Archaeology', value: 'Al-Ukhdud Site', color: 'text-orange-300' },
-                    { label: 'Architecture', value: 'Traditional Mud-Brick', color: 'text-white' },
-                    { label: 'Geography', value: 'Fertile Valley', color: 'text-white' }
-                ]
-            }
-        };
-
         // Formatter Setup
         const formatCurrency = (num, compact = false) => {
             const val = currentCurrency === 'SAR' ? num * SAR_RATE : num;
@@ -1544,40 +1224,6 @@
         };
 
         const formatNumber = (num) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(num);
-
-        // Map Interactions
-        window.updateMap = (regionKey, btnElement) => {
-            // Update active dot
-            document.querySelectorAll('.waypoint-dot').forEach(el => el.classList.remove('active'));
-            if(btnElement) btnElement.classList.add('active');
-
-            const data = mapData[regionKey];
-            if(!data) return;
-
-            // Update DOM
-            const tag = document.getElementById('map-tag');
-            tag.className = `text-[10px] px-2 py-1 rounded font-bold uppercase tracking-wider border ${data.color} ${data.bg} ${data.border}`;
-            tag.innerText = data.tag;
-
-            document.getElementById('map-title').innerText = data.title;
-            document.getElementById('map-desc').innerText = data.desc;
-
-            const statsContainer = document.getElementById('map-stats');
-            statsContainer.innerHTML = '';
-            
-            data.stats.forEach(s => {
-                let valHtml = `<span class="font-bold text-sm font-numbers ${s.color}">${s.value}</span>`;
-                if(s.usd) {
-                    valHtml = `<span class="font-bold text-sm font-numbers money-stat ${s.color}" data-usd="${s.usd}">${formatCurrency(s.usd, true)}</span>`;
-                }
-                statsContainer.innerHTML += `
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex justify-between items-center">
-                        <span class="text-xs text-gray-300 uppercase tracking-wider">${s.label}</span>
-                        ${valHtml}
-                    </div>
-                `;
-            });
-        };
 
         // Collapsible Sections Logic
         window.toggleSection = (sectionId) => {
@@ -1609,7 +1255,7 @@
                     setTimeout(() => { window.tradeChart.update(); }, 300);
                 }
                 if(sectionId === 'sec-energy' && window.renewablesMixChart) {
-                    setTimeout(() => { window.renewablesMixChart.update(); }, 300);
+                    setTimeout(() => { window.renewablesMixChart.update(); window.mineralBreakdownChart.update(); }, 300);
                 }
                 if(sectionId === 'sec-digital' && window.techGrowthChart) {
                     setTimeout(() => { window.techGrowthChart.update(); }, 300);
@@ -1619,6 +1265,9 @@
                 }
                 if(sectionId === 'sec-enviro' && window.protectedAreaChart) {
                     setTimeout(() => { window.protectedAreaChart.update(); }, 300);
+                }
+                if(sectionId === 'sec-tourism' && window.tourismArrivalsChart) {
+                    setTimeout(() => { window.tourismArrivalsChart.update(); }, 300);
                 }
             } else {
                 // Close
@@ -1637,7 +1286,7 @@
                 ? 'px-3 md:px-4 py-1 md:py-1.5 rounded-md bg-saudi-green text-white transition-colors' 
                 : 'px-3 md:px-4 py-1 md:py-1.5 rounded-md text-gray-400 hover:text-white transition-colors';
             
-            // Update static money elements (including dynamic map ones)
+            // Update static money elements 
             document.querySelectorAll('.money-stat').forEach(el => {
                 const usdValue = parseFloat(el.getAttribute('data-usd'));
                 el.innerText = formatCurrency(usdValue, true);
@@ -1663,6 +1312,12 @@
                         animateValue(entry.target);
                         entry.target.classList.add('counted');
                     }
+                    
+                    // If it's a progress bar fill
+                    if (entry.target.classList.contains('progress-fill')) {
+                        entry.target.style.width = entry.target.getAttribute('data-target');
+                    }
+
                     observer.unobserve(entry.target);
                 }
             });
@@ -1713,7 +1368,7 @@
 
         // Initialize scroll observer
         document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll('.count-up-element').forEach((el) => {
+            document.querySelectorAll('.count-up-element, .progress-fill').forEach((el) => {
                 observer.observe(el);
             });
         });
@@ -1871,10 +1526,10 @@
 
         if(document.getElementById('tradeChart')) {
             window.tradeChart = new Chart(document.getElementById('tradeChart').getContext('2d'), {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: ['2020', '2021', '2022', '2023', '2024'],
-                    datasets: [{ label: 'Non-Oil Exports (Billions USD)', data: [53, 73, 84, 91, 98], backgroundColor: '#06b6d4', borderRadius: 4 }]
+                    datasets: [{ label: 'FDI Inflows (Billions USD)', data: [5.4, 19.3, 33.0, 25.0, 28.5], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.1)', borderWidth: 2, fill: true, tension: 0.4 }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }, x: { grid: { display: false } } } }
             });
@@ -1888,6 +1543,17 @@
                     datasets: [{ data: [65, 20, 10, 5], backgroundColor: ['#facc15', '#93c5fd', '#34d399', '#9ca3af'], borderColor: '#020d05', borderWidth: 2 }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#9ca3af', boxWidth: 10, font: {size: 10} } } } }
+            });
+        }
+        
+        if(document.getElementById('mineralBreakdownChart')) {
+            window.mineralBreakdownChart = new Chart(document.getElementById('mineralBreakdownChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Gold', 'Copper', 'Zinc', 'Phosphate', 'Uranium/Other'],
+                    datasets: [{ data: [35, 25, 15, 15, 10], backgroundColor: ['#D4AF37', '#b45309', '#a1a1aa', '#34d399', '#6366f1'], borderColor: '#020d05', borderWidth: 2 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right', labels: { color: '#9ca3af', boxWidth: 10, font: {size: 10} } } } }
             });
         }
 
@@ -1934,6 +1600,27 @@
                     datasets: [{ data: [18.1, 11.9], backgroundColor: ['#10b981', 'rgba(255,255,255,0.05)'], borderColor: '#020d05', borderWidth: 2 }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, cutout: '80%', plugins: { legend: { display: false } } }
+            });
+        }
+
+        if(document.getElementById('tourismArrivalsChart')) {
+            window.tourismArrivalsChart = new Chart(document.getElementById('tourismArrivalsChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['2021', '2022', '2023', '2024(E)', '2030(T)'],
+                    datasets: [
+                        { label: 'Domestic', data: [64, 77, 79, 82, 80], backgroundColor: 'rgba(0, 108, 53, 0.8)', borderRadius: 4 },
+                        { label: 'International', data: [3, 17, 27, 30, 70], backgroundColor: 'rgba(212, 175, 55, 0.8)', borderRadius: 4 }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', font: {size: 10} } } }, 
+                    scales: { 
+                        y: { stacked: true, grid: { color: 'rgba(255, 255, 255, 0.05)' } }, 
+                        x: { stacked: true, grid: { display: false } } 
+                    } 
+                }
             });
         }
 
