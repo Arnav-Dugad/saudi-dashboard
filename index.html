@@ -205,7 +205,22 @@
             <i data-lucide="plane" class="w-5 h-5"></i>
             <span class="nav-tooltip absolute right-full top-1/2 -translate-y-1/2 mr-2 px-2 py-1 bg-black/90 text-yellow-400 text-[10px] uppercase font-bold tracking-widest rounded whitespace-nowrap border border-yellow-400/20">Tourism</span>
         </a>
+        <a href="#nav-sports" class="nav-item relative p-2 rounded-full text-gray-400 hover:text-red-400 hover:bg-white/5 transition-all">
+            <i data-lucide="trophy" class="w-5 h-5"></i>
+            <span class="nav-tooltip absolute right-full top-1/2 -translate-y-1/2 mr-2 px-2 py-1 bg-black/90 text-red-400 text-[10px] uppercase font-bold tracking-widest rounded whitespace-nowrap border border-red-400/20">Sports</span>
+        </a>
     </nav>
+
+    <!-- Floating Intelligence Feed Toast -->
+    <div id="fact-toast" class="fixed bottom-6 left-6 z-[100] glass-card p-4 rounded-2xl w-72 transform translate-y-32 opacity-0 transition-all duration-700 pointer-events-none">
+        <div class="flex items-start gap-3">
+            <i data-lucide="info" class="text-saudi-gold w-5 h-5 flex-shrink-0 mt-0.5"></i>
+            <div>
+                <h5 class="text-[10px] text-saudi-gold font-bold uppercase tracking-widest mb-1">Intelligence Feed</h5>
+                <p id="fact-text" class="text-xs text-gray-200 leading-relaxed">Fact goes here.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Header Section -->
     <header class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center mb-6 p-4 md:p-8 pb-6 border-b border-saudi-gold/20 bg-[#020d05]/90 backdrop-blur-md z-50">
@@ -262,6 +277,7 @@
             </div>
 
             <!-- 4 Core Pillars Grid -->
+            <!-- Removed the count-up-element classes from these live ticking elements to fix the bug -->
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 <div class="glass-card rounded-2xl p-6 relative group">
                     <div class="flex justify-between items-start mb-4">
@@ -269,7 +285,7 @@
                         <span class="text-[10px] font-bold text-saudi-green bg-saudi-green/10 px-2 py-1 rounded uppercase tracking-wider">PIF AUM</span>
                     </div>
                     <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-2">Public Investment Fund</h4>
-                    <div class="text-2xl md:text-3xl font-bold font-numbers text-white truncate count-up-element" id="pif-val" data-val="0">$0</div>
+                    <div class="text-2xl md:text-3xl font-bold font-numbers text-white truncate" id="pif-val">$0</div>
                 </div>
                 <div class="glass-card rounded-2xl p-6 relative group">
                     <div class="flex justify-between items-start mb-4">
@@ -277,7 +293,7 @@
                         <span class="text-[10px] font-bold text-saudi-gold bg-saudi-gold/10 px-2 py-1 rounded uppercase tracking-wider">SAMA</span>
                     </div>
                     <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-2">Foreign Exchange Reserves</h4>
-                    <div class="text-2xl md:text-3xl font-bold font-numbers text-white truncate count-up-element" id="reserves-val" data-val="0">$0</div>
+                    <div class="text-2xl md:text-3xl font-bold font-numbers text-white truncate" id="reserves-val">$0</div>
                 </div>
                 <div class="glass-card rounded-2xl p-6 relative group">
                     <div class="flex justify-between items-start mb-4">
@@ -285,7 +301,7 @@
                         <span class="text-[10px] font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded uppercase tracking-wider">EQUITY</span>
                     </div>
                     <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-2">State Aramco Equity</h4>
-                    <div class="text-2xl md:text-3xl font-bold font-numbers text-white truncate count-up-element" id="aramco-val" data-val="0">$0</div>
+                    <div class="text-2xl md:text-3xl font-bold font-numbers text-white truncate" id="aramco-val">$0</div>
                 </div>
                 <div class="glass-card rounded-2xl p-6 relative group">
                     <div class="flex justify-between items-start mb-4">
@@ -293,7 +309,7 @@
                         <span class="text-[10px] font-bold text-purple-400 bg-purple-400/10 px-2 py-1 rounded uppercase tracking-wider">MACRO</span>
                     </div>
                     <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-2">Nominal GDP (Live Est.)</h4>
-                    <div class="text-2xl md:text-3xl font-bold font-numbers text-white truncate count-up-element" id="gdp-val" data-val="0">$0</div>
+                    <div class="text-2xl md:text-3xl font-bold font-numbers text-white truncate" id="gdp-val">$0</div>
                 </div>
             </div>
 
@@ -488,6 +504,7 @@
                 <div class="glass-card rounded-2xl p-6 relative overflow-hidden group">
                     <i data-lucide="flame" class="absolute -right-8 -bottom-8 w-40 h-40 text-orange-500/10 transition-all"></i>
                     <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-4 flex items-center gap-2"><i data-lucide="droplets" class="text-orange-500 w-4 h-4"></i> Oil Produced Today</h4>
+                    <!-- Removed count up class since this is a fast live ticker -->
                     <div class="text-4xl font-black font-numbers text-white relative z-10" id="oil-barrels-val">0</div>
                     <div class="mt-4 flex justify-between items-center border-t border-white/10 pt-4"><span class="text-xs text-gray-300">Max Capacity</span><span class="text-sm font-bold text-white font-numbers">12.0M bpd</span></div>
                 </div>
@@ -516,7 +533,49 @@
             </div>
         </div>
 
-        <!-- ================= NEW SECTION: ENVIRONMENTAL CONSERVATION ================= -->
+        <!-- ================= NEW SECTION: GREEN HYDROGEN & CLEAN TECH ================= -->
+        <div id="nav-hydrogen" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-hydrogen')">
+            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
+            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
+                Green Hydrogen & Clean Tech
+                <i data-lucide="chevron-up" id="icon-sec-hydrogen" class="w-5 h-5 transition-transform duration-300"></i>
+            </span>
+            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
+        </div>
+
+        <div id="sec-hydrogen" class="section-content">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-emerald-400">
+                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="battery-charging" class="text-emerald-400 w-4 h-4"></i> NEOM Green Hydrogen</h4>
+                    <div class="text-3xl font-black font-numbers text-white money-stat count-up-element" data-usd="8400000000" data-raw="8.4">$8.4B</div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Mega-Plant Investment</p>
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
+                        <span class="text-gray-300">Status</span>
+                        <span class="font-bold text-emerald-400">Under Construction</span>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-cyan-400">
+                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="wind" class="text-cyan-400 w-4 h-4"></i> Dedicated Power</h4>
+                    <div class="text-3xl font-black font-numbers text-white"><span class="count-up-element" data-raw="4">4</span> GW</div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Wind & Solar capacity for plant</p>
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
+                        <span class="text-gray-300">Emissions</span>
+                        <span class="font-bold text-cyan-400">100% Carbon Free</span>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-blue-400">
+                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="factory" class="text-blue-400 w-4 h-4"></i> Production Target</h4>
+                    <div class="text-3xl font-black font-numbers text-white"><span class="count-up-element" data-raw="600">600</span> Tonnes</div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Green Hydrogen Per Day</p>
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
+                        <span class="text-gray-300">Export Timeline</span>
+                        <span class="font-bold text-blue-400">Starting 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION: ENVIRONMENTAL CONSERVATION ================= -->
         <div id="nav-enviro" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-enviro')">
             <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
             <span class="flex items-center gap-2 group-hover:text-white transition-colors">
@@ -569,7 +628,7 @@
             </div>
         </div>
 
-        <!-- ================= NEW SECTION: WOMEN EMPOWERMENT ================= -->
+        <!-- ================= SECTION: WOMEN EMPOWERMENT ================= -->
         <div id="nav-women" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-women')">
             <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
             <span class="flex items-center gap-2 group-hover:text-white transition-colors">
@@ -609,6 +668,93 @@
                             <span class="text-xs text-gray-300">Female Ambassadors Appointed</span>
                         </div>
                         <p class="text-[9px] text-gray-400 mt-2">Including envoys to the US, EU, and UK.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION: GLOBAL SPORTS & E-SPORTS HUB ================= -->
+        <div id="nav-sports" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-sports')">
+            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
+            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
+                Global Sports & E-Sports Hub
+                <i data-lucide="chevron-up" id="icon-sec-sports" class="w-5 h-5 transition-transform duration-300"></i>
+            </span>
+            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
+        </div>
+
+        <div id="sec-sports" class="section-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <!-- EWC -->
+                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-purple-500">
+                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="monitor-play" class="text-purple-500 w-4 h-4"></i> Esports World Cup</h4>
+                    <div class="text-3xl font-black font-numbers text-white money-stat count-up-element" data-usd="60000000" data-raw="60">$60M+</div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Record Prize Pool</p>
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
+                        <span class="text-gray-300">Location</span>
+                        <span class="font-bold text-white">Riyadh Boulevard</span>
+                    </div>
+                </div>
+                <!-- FIFA -->
+                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-saudi-gold">
+                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="trophy" class="text-saudi-gold w-4 h-4"></i> FIFA World Cup™</h4>
+                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="2034">2034</div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Sole Bidding Host Nation</p>
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
+                        <span class="text-gray-300">Stadiums</span>
+                        <span class="font-bold text-white count-up-element" data-raw="15">15 Planned</span>
+                    </div>
+                </div>
+                <!-- F1 -->
+                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-red-500">
+                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="flag" class="text-red-500 w-4 h-4"></i> Formula 1 STC</h4>
+                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="252">252 <span class="text-sm">km/h</span></div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Fastest Street Circuit in F1</p>
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
+                        <span class="text-gray-300">Location</span>
+                        <span class="font-bold text-white">Jeddah Corniche</span>
+                    </div>
+                </div>
+                <!-- LIV / Golf -->
+                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-emerald-500">
+                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="club" class="text-emerald-500 w-4 h-4"></i> LIV Golf Series</h4>
+                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="14">14</div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Global Tournaments / Yr</p>
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
+                        <span class="text-gray-300">Backing</span>
+                        <span class="font-bold text-white">PIF Financed</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Sports GDP Chart -->
+                <div class="glass-card rounded-2xl p-6">
+                    <h4 class="text-white uppercase tracking-widest text-sm font-bold flex items-center gap-2 mb-4"><i data-lucide="bar-chart" class="text-yellow-400 w-5 h-5"></i> Sports Sector GDP Contribution (%)</h4>
+                    <div class="h-48 w-full"><canvas id="sportsChart"></canvas></div>
+                </div>
+                <!-- Qiddiya Callout -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-center">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="p-4 bg-purple-500/10 rounded-xl text-purple-400 border border-purple-500/20"><i data-lucide="ferris-wheel" class="w-8 h-8"></i></div>
+                        <div>
+                            <h5 class="text-white font-bold tracking-widest uppercase text-sm">Qiddiya City</h5>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest">Global Capital for Play</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg border border-white/5">
+                            <span class="text-xs text-gray-300">Gaming District Expected Jobs</span>
+                            <span class="font-bold text-white count-up-element" data-raw="39000">39,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg border border-white/5">
+                            <span class="text-xs text-gray-300">Total Theme Parks</span>
+                            <span class="font-bold text-white count-up-element" data-raw="12">12</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg border border-white/5">
+                            <span class="text-xs text-gray-300">Prince Mohammed bin Salman Stadium</span>
+                            <span class="font-bold text-white">45k Seats (Cliffside)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -709,7 +855,7 @@
                     </div>
                     <div class="flex justify-between items-center p-3 border border-white/5 rounded-lg mb-2">
                         <span class="text-xs text-gray-300">Riyadh Season Visitors</span>
-                        <span class="font-bold text-white">20M+</span>
+                        <span class="font-bold text-white count-up-element" data-raw="20">20M+</span>
                     </div>
                     <div class="flex justify-between items-center p-3 border border-white/5 rounded-lg">
                         <span class="text-xs text-gray-300">Heritage Sites Developed</span>
@@ -752,7 +898,7 @@
                 <div class="mb-6">
                     <div class="flex justify-between items-end mb-2">
                         <span class="text-sm text-gray-300">Female Participation</span>
-                        <span class="text-2xl font-bold text-white font-numbers">35.6%</span>
+                        <span class="text-2xl font-bold text-white font-numbers count-up-element" data-raw="35.6">35.6%</span>
                     </div>
                     <div class="w-full bg-white/10 rounded-full h-3 relative">
                         <div class="absolute w-1 h-4 bg-orange-400 top-[-2px] left-[30%] z-10" title="Target"></div>
@@ -762,7 +908,7 @@
                 <div>
                     <div class="flex justify-between items-end mb-2">
                         <span class="text-sm text-gray-300">Overall Unemployment</span>
-                        <span class="text-2xl font-bold text-white font-numbers">4.4%</span>
+                        <span class="text-2xl font-bold text-white font-numbers count-up-element" data-raw="4.4">4.4%</span>
                     </div>
                     <div class="w-full bg-white/10 rounded-full h-2"><div class="bg-emerald-400 h-2 rounded-full progress-fill" data-target="4.4%" style="width: 0%"></div></div>
                 </div>
@@ -806,384 +952,6 @@
             </div>
         </div>
 
-        <!-- ================= SECTION: INDUSTRIAL & FINANCIAL POWERHOUSE ================= -->
-        <div class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-industry')">
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
-            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Industrial & Financial Powerhouse
-                <i data-lucide="chevron-up" id="icon-sec-industry" class="w-5 h-5 transition-transform duration-300"></i>
-            </span>
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
-        </div>
-
-        <div id="sec-industry" class="section-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                <!-- Tadawul -->
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-blue-500">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="bar-chart-3" class="text-blue-500 w-4 h-4"></i> Saudi Exchange</h4>
-                    <div class="text-3xl font-black font-numbers text-white money-stat count-up-element" data-usd="2900000000000" data-raw="2.9">$2.9T</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Total Market Capitalization</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Listed Companies</span>
-                        <span class="font-bold text-white count-up-element" data-raw="300">300+</span>
-                    </div>
-                </div>
-                <!-- Manufacturing -->
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-zinc-400">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="factory" class="text-zinc-400 w-4 h-4"></i> EV Manufacturing</h4>
-                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="500000">500,000</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Vehicles/Year Target (2030)</p>
-                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-zinc-400 h-1.5 rounded-full progress-fill" data-target="25%" style="width: 0%"></div></div>
-                    <p class="text-[8px] text-right text-zinc-400 mt-1">Lucid & Ceer Facilities Active</p>
-                </div>
-                <!-- Defense -->
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-red-500">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="shield" class="text-red-500 w-4 h-4"></i> Defense (SAMI)</h4>
-                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="50">50%</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Localization Target by 2030</p>
-                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-red-500 h-1.5 rounded-full progress-fill" data-target="14%" style="width: 0%"></div></div>
-                    <p class="text-[8px] text-right text-red-400 mt-1">Current: ~14%</p>
-                </div>
-                <!-- Tech / VC -->
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-purple-500">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="rocket" class="text-purple-500 w-4 h-4"></i> Tech & Startup VC</h4>
-                    <div class="text-3xl font-black font-numbers text-white money-stat count-up-element" data-usd="1380000000" data-raw="1.38">$1.38B</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">VC Funding (2023 Record)</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">MENA Rank</span>
-                        <span class="font-bold text-purple-400">#1</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Non-Oil Growth Chart -->
-                <div class="glass-card rounded-2xl p-6">
-                    <h4 class="text-white uppercase tracking-widest text-sm font-bold flex items-center gap-2 mb-4"><i data-lucide="line-chart" class="text-blue-500 w-5 h-5"></i> Non-Oil GDP Growth Trajectory</h4>
-                    <div class="h-48 w-full"><canvas id="nonOilChart"></canvas></div>
-                </div>
-                <!-- Jubail & Yanbu Callout -->
-                <div class="glass-card rounded-2xl p-6 flex flex-col justify-center">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="p-4 bg-teal-500/10 rounded-xl text-teal-400 border border-teal-500/20"><i data-lucide="ship" class="w-8 h-8"></i></div>
-                        <div>
-                            <h5 class="text-white font-bold tracking-widest uppercase text-sm">Royal Commission for Jubail & Yanbu</h5>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-widest">Global Petrochemical Powerhouse</p>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg border border-white/5">
-                            <span class="text-xs text-gray-300">Total Attracted Investment</span>
-                            <span class="font-bold text-white money-stat count-up-element" data-usd="320000000000" data-raw="320">$320B+</span>
-                        </div>
-                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg border border-white/5">
-                            <span class="text-xs text-gray-300">Global Petrochemical Share</span>
-                            <span class="font-bold text-white">~10%</span>
-                        </div>
-                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg border border-white/5">
-                            <span class="text-xs text-gray-300">Active Industrial Cities</span>
-                            <span class="font-bold text-white count-up-element" data-raw="4">4</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= SECTION: VISION 2030 MEGA PROJECTS ================= -->
-        <div id="nav-projects" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-projects')">
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
-            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Vision 2030 & Mega Projects
-                <i data-lucide="chevron-up" id="icon-sec-projects" class="w-5 h-5 transition-transform duration-300"></i>
-            </span>
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
-        </div>
-
-        <div id="sec-projects" class="section-content">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div class="glass-card rounded-2xl p-4 border-l-4 border-l-cyan-400 relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 text-cyan-400"><i data-lucide="building-2" class="w-20 h-20"></i></div>
-                    <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">NEOM</h5><span class="text-[8px] bg-cyan-400/20 text-cyan-400 px-1 py-0.5 rounded">PHASE 1</span></div>
-                    <p class="text-[9px] text-gray-400 mb-2">Cognitive City / The Line</p>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-cyan-400 h-1 rounded-full progress-fill" data-target="35%" style="width: 0%"></div></div>
-                </div>
-                <div class="glass-card rounded-2xl p-4 border-l-4 border-l-purple-400 relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 text-purple-400"><i data-lucide="ferris-wheel" class="w-20 h-20"></i></div>
-                    <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">Qiddiya</h5><span class="text-[8px] bg-purple-400/20 text-purple-400 px-1 py-0.5 rounded">CONST.</span></div>
-                    <p class="text-[9px] text-gray-400 mb-2">Entertainment Capital</p>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-purple-400 h-1 rounded-full progress-fill" data-target="45%" style="width: 0%"></div></div>
-                </div>
-                <div class="glass-card rounded-2xl p-4 border-l-4 border-l-emerald-400 relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 text-emerald-400"><i data-lucide="palmtree" class="w-20 h-20"></i></div>
-                    <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">Red Sea</h5><span class="text-[8px] bg-emerald-400/20 text-emerald-400 px-1 py-0.5 rounded">OPENING</span></div>
-                    <p class="text-[9px] text-gray-400 mb-2">Regenerative Tourism</p>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-emerald-400 h-1 rounded-full progress-fill" data-target="65%" style="width: 0%"></div></div>
-                </div>
-                <div class="glass-card rounded-2xl p-4 border-l-4 border-l-amber-400 relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 text-amber-400"><i data-lucide="castle" class="w-20 h-20"></i></div>
-                    <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">Diriyah</h5><span class="text-[8px] bg-amber-400/20 text-amber-400 px-1 py-0.5 rounded">OPENING</span></div>
-                    <p class="text-[9px] text-gray-400 mb-2">Cultural Heritage City</p>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-amber-400 h-1 rounded-full progress-fill" data-target="55%" style="width: 0%"></div></div>
-                </div>
-                <div class="glass-card rounded-2xl p-4 border-l-4 border-l-indigo-400 relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 text-indigo-400"><i data-lucide="box" class="w-20 h-20"></i></div>
-                    <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">The Mukaab</h5><span class="text-[8px] bg-indigo-400/20 text-indigo-400 px-1 py-0.5 rounded">EARLY</span></div>
-                    <p class="text-[9px] text-gray-400 mb-2">New Murabba Downtown</p>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-indigo-400 h-1 rounded-full progress-fill" data-target="15%" style="width: 0%"></div></div>
-                </div>
-                <div class="glass-card rounded-2xl p-4 border-l-4 border-l-blue-500 relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 text-blue-500"><i data-lucide="home" class="w-20 h-20"></i></div>
-                    <div class="flex justify-between items-center mb-2"><h5 class="font-bold text-white text-xs">Roshn</h5><span class="text-[8px] bg-blue-500/20 text-blue-500 px-1 py-0.5 rounded">SCALING</span></div>
-                    <p class="text-[9px] text-gray-400 mb-2">National Housing Dev.</p>
-                    <div class="w-full bg-white/10 rounded-full h-1 relative z-10"><div class="bg-blue-500 h-1 rounded-full progress-fill" data-target="40%" style="width: 0%"></div></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= NEW SECTION: TOURISM & HOSPITALITY EXPANSION ================= -->
-        <div id="nav-tourism" class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-tourism')">
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
-            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Tourism & Hospitality Expansion
-                <i data-lucide="chevron-up" id="icon-sec-tourism" class="w-5 h-5 transition-transform duration-300"></i>
-            </span>
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
-        </div>
-
-        <div id="sec-tourism" class="section-content">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                <!-- Tourism Stats Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="glass-card rounded-2xl p-5 border-t-2 border-t-yellow-400">
-                        <i data-lucide="passport" class="text-yellow-400 w-6 h-6 mb-2"></i>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">E-Visa Approvals</p>
-                        <div class="text-2xl font-bold font-numbers text-white count-up-element" data-raw="30000000">30M+</div>
-                        <p class="text-[9px] text-yellow-400 mt-2">Issued since program launch</p>
-                    </div>
-                    <div class="glass-card rounded-2xl p-5 border-t-2 border-t-blue-400">
-                        <i data-lucide="hotel" class="text-blue-400 w-6 h-6 mb-2"></i>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Hotel Keys Pipeline</p>
-                        <div class="text-2xl font-bold font-numbers text-white count-up-element" data-raw="315000">315,000+</div>
-                        <p class="text-[9px] text-blue-400 mt-2">New rooms planned by 2030</p>
-                    </div>
-                    <div class="glass-card rounded-2xl p-5 border-t-2 border-t-emerald-400">
-                        <i data-lucide="map" class="text-emerald-400 w-6 h-6 mb-2"></i>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">UNESCO Heritage Sites</p>
-                        <div class="text-2xl font-bold font-numbers text-white count-up-element" data-raw="7">7</div>
-                        <p class="text-[9px] text-emerald-400 mt-2">Globally recognized locations</p>
-                    </div>
-                    <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-400">
-                        <i data-lucide="pie-chart" class="text-pink-400 w-6 h-6 mb-2"></i>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Target GDP Contribution</p>
-                        <div class="text-2xl font-bold font-numbers text-white count-up-element" data-raw="10">10%</div>
-                        <p class="text-[9px] text-pink-400 mt-2">Vision 2030 economic goal</p>
-                    </div>
-                </div>
-
-                <!-- Tourism Arrivals Chart -->
-                <div class="glass-card rounded-2xl p-6">
-                    <h4 class="text-white uppercase tracking-widest text-sm font-bold flex items-center gap-2 mb-4"><i data-lucide="plane-landing" class="text-yellow-400 w-5 h-5"></i> Tourism Arrivals Target (Millions)</h4>
-                    <div class="h-64 w-full"><canvas id="tourismArrivalsChart"></canvas></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= SECTION: AGRICULTURE & FOOD SECURITY ================= -->
-        <div class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-agriculture')">
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
-            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Agriculture, Water & Food Security
-                <i data-lucide="chevron-up" id="icon-sec-agriculture" class="w-5 h-5 transition-transform duration-300"></i>
-            </span>
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
-        </div>
-
-        <div id="sec-agriculture" class="section-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-blue-400">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="droplets" class="text-blue-400 w-4 h-4"></i> Desalination Leader</h4>
-                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="6.6">6.6M</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Cubic Meters / Day</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Global Ranking</span>
-                        <span class="font-bold text-blue-400">#1</span>
-                    </div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-lime-400">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="sprout" class="text-lime-400 w-4 h-4"></i> Agri-Tech & Farms</h4>
-                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="100">100%</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Self-Sufficiency in Dates & Dairy</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Mega-Dairy (Almarai)</span>
-                        <span class="font-bold text-lime-400">Global Top 5</span>
-                    </div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-emerald-500">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="leaf" class="text-emerald-500 w-4 h-4"></i> Food Security Fund</h4>
-                    <div class="text-3xl font-black font-numbers text-white money-stat count-up-element" data-usd="3200000000" data-raw="3.2">$3.2B</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">SALIC Strategic Investment</p>
-                    <div class="w-full bg-white/10 rounded-full h-1.5"><div class="bg-emerald-500 h-1.5 rounded-full progress-fill" data-target="85%" style="width: 0%"></div></div>
-                    <p class="text-[8px] text-right text-emerald-400 mt-1">Global Supply Chain Acq.</p>
-                </div>
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-cyan-300">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="waves" class="text-cyan-300 w-4 h-4"></i> Water Reuse (V2030)</h4>
-                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="70">70%</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Target Recycled Water for Parks/Agri</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Current Progress</span>
-                        <span class="font-bold text-cyan-300">~25%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= SECTION: SPACE, SCIENCE & FUTURE TECH ================= -->
-        <div class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-space')">
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
-            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Space, Science & Frontier Tech
-                <i data-lucide="chevron-up" id="icon-sec-space" class="w-5 h-5 transition-transform duration-300"></i>
-            </span>
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
-        </div>
-
-        <div id="sec-space" class="section-content">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
-                <div class="glass-card rounded-2xl p-6 flex items-center gap-5 border-l-4 border-l-indigo-500">
-                    <div class="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl text-indigo-400">
-                        <i data-lucide="rocket" class="w-8 h-8"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Saudi Space Agency</p>
-                        <div class="font-numbers text-2xl text-white font-bold tabular-nums">ISS Mission</div>
-                        <p class="text-[10px] text-indigo-400 mt-1">Rayyanah Barnawi (1st Arab Female Astronaut)</p>
-                    </div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 flex items-center gap-5 border-l-4 border-l-fuchsia-500">
-                    <div class="p-4 bg-fuchsia-500/10 border border-fuchsia-500/20 rounded-2xl text-fuchsia-400">
-                        <i data-lucide="dna" class="w-8 h-8"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Saudi Human Genome</p>
-                        <div class="font-numbers text-2xl text-white font-bold tabular-nums">100,000+</div>
-                        <p class="text-[10px] text-fuchsia-400 mt-1">Genomes Mapped for Precision Meds</p>
-                    </div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 flex items-center gap-5 border-l-4 border-l-teal-400">
-                    <div class="p-4 bg-teal-500/10 border border-teal-500/20 rounded-2xl text-teal-400">
-                        <i data-lucide="microscope" class="w-8 h-8"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">R&D Output (KAUST)</p>
-                        <div class="font-numbers text-2xl text-white font-bold tabular-nums">Top 100</div>
-                        <p class="text-[10px] text-teal-400 mt-1">Global Nature Index Academic Ranking</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- ================= SECTION: TRANSPORTATION & MEGASTRUCTURES ================= -->
-        <div class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-transport')">
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
-            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Transportation & Megastructures
-                <i data-lucide="chevron-up" id="icon-sec-transport" class="w-5 h-5 transition-transform duration-300"></i>
-            </span>
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
-        </div>
-
-        <div id="sec-transport" class="section-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-sky-400">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="train" class="text-sky-400 w-4 h-4"></i> Riyadh Metro</h4>
-                    <div class="text-3xl font-black font-numbers text-white"><span class="count-up-element" data-raw="176">176</span> <span class="text-sm">km</span></div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">6 Lines, 85 Stations</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Scale</span>
-                        <span class="font-bold text-sky-400">World's Largest</span>
-                    </div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-emerald-400">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="zap" class="text-emerald-400 w-4 h-4"></i> Haramain Rail</h4>
-                    <div class="text-3xl font-black font-numbers text-white"><span class="count-up-element" data-raw="300">300</span> <span class="text-sm">km/h</span></div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">High-Speed Rail Network</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Connection</span>
-                        <span class="font-bold text-emerald-400">Mecca ↔ Medina</span>
-                    </div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-blue-500">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="plane" class="text-blue-500 w-4 h-4"></i> King Salman Intl</h4>
-                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="120">120M</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Pax Capacity Target (2030)</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Runways</span>
-                        <span class="font-bold text-blue-500">6 Planned</span>
-                    </div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 border-t-2 border-t-indigo-400">
-                    <h4 class="text-white uppercase tracking-widest text-xs font-bold flex items-center gap-2 mb-4"><i data-lucide="plane-takeoff" class="text-indigo-400 w-4 h-4"></i> Riyadh Air</h4>
-                    <div class="text-3xl font-black font-numbers text-white count-up-element" data-raw="100">100+</div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1 mb-4">Global Destinations by 2030</p>
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded text-xs">
-                        <span class="text-gray-300">Status</span>
-                        <span class="font-bold text-indigo-400">New National Carrier</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= SECTION: HEALTHCARE & LIFE SCIENCES ================= -->
-        <div class="flex items-center text-center text-saudi-gold text-sm font-bold tracking-[0.2em] uppercase mt-12 mb-8 cursor-pointer group" onclick="toggleSection('sec-health')">
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors mr-6"></div>
-            <span class="flex items-center gap-2 group-hover:text-white transition-colors">
-                Healthcare & Life Sciences
-                <i data-lucide="chevron-up" id="icon-sec-health" class="w-5 h-5 transition-transform duration-300"></i>
-            </span>
-            <div class="flex-1 border-b border-saudi-gold/20 group-hover:border-saudi-gold/50 transition-colors ml-6"></div>
-        </div>
-
-        <div id="sec-health" class="section-content">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-6 flex items-center gap-2">
-                            <i data-lucide="monitor-check" class="w-4 h-4 text-cyan-400"></i> SEHA Virtual Hospital
-                        </h4>
-                        <div class="text-3xl font-black font-numbers text-white tracking-tight mb-2 count-up-element" data-raw="150">150+</div>
-                        <p class="text-xs text-gray-300 uppercase tracking-widest mb-1">Connected Hospitals</p>
-                        <p class="text-[10px] text-gray-500">The world's largest virtual healthcare network providing specialized remote care.</p>
-                    </div>
-                </div>
-                
-                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-6 flex items-center gap-2">
-                            <i data-lucide="heart-pulse" class="w-4 h-4 text-red-400"></i> Life Expectancy Target
-                        </h4>
-                        <div class="text-3xl font-black font-numbers text-white tracking-tight mb-2"><span class="count-up-element" data-raw="80">80</span> Years</div>
-                        <p class="text-xs text-gray-300 uppercase tracking-widest mb-1">Vision 2030 Goal</p>
-                        <div class="w-full bg-white/10 rounded-full h-1.5 mt-3">
-                            <div class="bg-red-400 h-1.5 rounded-full progress-fill" data-target="88%" style="width: 0%"></div>
-                        </div>
-                        <p class="text-[10px] text-right text-gray-500 mt-1">Current: ~75.3 Yrs</p>
-                    </div>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-gray-400 text-xs tracking-widest font-semibold uppercase mb-6 flex items-center gap-2">
-                            <i data-lucide="flask-conical" class="w-4 h-4 text-fuchsia-400"></i> Biotech & Pharma
-                        </h4>
-                        <div class="text-3xl font-black font-numbers text-white tracking-tight money-stat mb-2 count-up-element" data-usd="3000000000" data-raw="3">$3.0B+</div>
-                        <p class="text-xs text-gray-300 uppercase tracking-widest mb-1">Local Manufacturing Push</p>
-                        <p class="text-[10px] text-gray-500">Strategic investments to localize insulin, vaccines, and advanced biologics.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Footer info -->
         <div class="text-center text-gray-600 text-xs mt-12 pb-8 max-w-4xl mx-auto border-t border-white/5 pt-6">
             <i data-lucide="info" class="w-4 h-4 inline-block mb-1"></i>
@@ -1204,6 +972,38 @@
         // Currency Settings
         let currentCurrency = 'USD';
         const SAR_RATE = 3.75; // 1 USD = 3.75 SAR
+
+        // Fact Toast Logic
+        const facts = [
+            "Saudi Arabia is building THE LINE, a 170km long city with zero cars and zero carbon emissions.",
+            "The Saudi Green Initiative aims to plant 10 Billion trees across the Kingdom.",
+            "Riyadh Metro is the largest single-phase public transport project ever built.",
+            "Saudi Arabia achieved its 2030 target of 100 million tourists 7 years early in 2023.",
+            "The Kingdom is the largest producer of desalinated water in the world.",
+            "PIF is the fastest-growing sovereign wealth fund in the world.",
+            "Saudi Arabia is investing $38 Billion into becoming a global gaming and e-sports hub.",
+            "King Salman Park in Riyadh will be 5 times the size of London's Hyde Park.",
+            "Women's participation in the Saudi workforce doubled from 17% to 35% in just 5 years."
+        ];
+
+        let currentFactIdx = 0;
+        setInterval(() => {
+            const toast = document.getElementById('fact-toast');
+            const text = document.getElementById('fact-text');
+            if(!toast || !text) return;
+            
+            text.innerText = facts[currentFactIdx];
+            currentFactIdx = (currentFactIdx + 1) % facts.length;
+            
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 6000);
+            
+        }, 15000);
 
         // Formatter Setup
         const formatCurrency = (num, compact = false) => {
@@ -1269,6 +1069,9 @@
                 if(sectionId === 'sec-tourism' && window.tourismArrivalsChart) {
                     setTimeout(() => { window.tourismArrivalsChart.update(); }, 300);
                 }
+                if(sectionId === 'sec-sports' && window.sportsChart) {
+                    setTimeout(() => { window.sportsChart.update(); }, 300);
+                }
             } else {
                 // Close
                 el.classList.add('collapsed');
@@ -1326,6 +1129,8 @@
         // Simple count up animation
         function animateValue(obj) {
             const end = parseFloat(obj.getAttribute('data-raw'));
+            if(isNaN(end)) return;
+
             const duration = 2000;
             let startTimestamp = null;
             const step = (timestamp) => {
@@ -1337,7 +1142,6 @@
                 let currentVal = easeProgress * end;
                 
                 if (obj.classList.contains('money-stat')) {
-                    // It's handled by currency toggle, just let it be or format it simply during anim
                     obj.innerHTML = currentVal.toFixed(1);
                 } else if(Number.isInteger(end)) {
                     obj.innerHTML = Math.floor(currentVal).toLocaleString() + (obj.innerHTML.includes('+') ? '+' : '') + (obj.innerHTML.includes('%') ? '%' : '') + (obj.innerHTML.includes('M') ? 'M' : '');
@@ -1404,19 +1208,11 @@
             document.getElementById('currency-symbol').innerText = currentCurrency === 'SAR' ? 'SAR ' : '$';
             document.getElementById('total-wealth').innerHTML = `${tDollars}<span class="text-3xl md:text-5xl text-saudi-gold/60">.${tCents}</span>`;
 
-            // Only update these if they are already visible/counted up so it doesn't glitch the intro animation
-            const pifEl = document.getElementById('pif-val');
-            if(pifEl.classList.contains('counted') || !pifEl.classList.contains('count-up-element')) pifEl.innerText = formatCurrency(currentPif);
-            
-            const reservesEl = document.getElementById('reserves-val');
-            if(reservesEl.classList.contains('counted') || !reservesEl.classList.contains('count-up-element')) reservesEl.innerText = formatCurrency(currentReserves);
-            
-            const aramcoEl = document.getElementById('aramco-val');
-            if(aramcoEl.classList.contains('counted') || !aramcoEl.classList.contains('count-up-element')) aramcoEl.innerText = formatCurrency(currentAramco);
-            
-            const gdpEl = document.getElementById('gdp-val');
-            if(gdpEl.classList.contains('counted') || !gdpEl.classList.contains('count-up-element')) gdpEl.innerText = formatCurrency(currentGdp);
-            
+            // These are real-time fast-ticking elements, no count-up needed.
+            document.getElementById('pif-val').innerText = formatCurrency(currentPif);
+            document.getElementById('reserves-val').innerText = formatCurrency(currentReserves);
+            document.getElementById('aramco-val').innerText = formatCurrency(currentAramco);
+            document.getElementById('gdp-val').innerText = formatCurrency(currentGdp);
             document.getElementById('population-val').innerText = formatNumber(Math.floor(currentPop));
             document.getElementById('oil-barrels-val').innerText = formatNumber(Math.floor(currentOilToday));
 
@@ -1621,6 +1417,17 @@
                         x: { stacked: true, grid: { display: false } } 
                     } 
                 }
+            });
+        }
+
+        if(document.getElementById('sportsChart')) {
+            window.sportsChart = new Chart(document.getElementById('sportsChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['2021', '2022', '2023', '2024', '2030 Target'],
+                    datasets: [{ label: 'Sports GDP Contribution (%)', data: [0.4, 0.7, 1.1, 1.5, 3.0], backgroundColor: '#facc15', borderRadius: 4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }, x: { grid: { display: false } } } }
             });
         }
 
